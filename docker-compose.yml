@@ -1,0 +1,24 @@
+services:
+  frontend:
+    image: devops-task-manager
+    container_name: frontend
+    ports:
+      - "8080:80"
+
+  backend:
+    build: ./backend
+    container_name: flask-api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+    image: postgres:16
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: devops
+      POSTGRES_PASSWORD: devops123
+      POSTGRES_DB: taskmanager
+    ports:
+      - "5432:5432"
