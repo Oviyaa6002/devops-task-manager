@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: flask-config
+
+data:
+  DB_HOST: {{ .Values.flask.dbHost }}
+  DB_PORT: "{{ .Values.postgres.servicePort }}"
+  DB_NAME: {{ .Values.postgres.dbName }}
