@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Repository
@@ -45,3 +45,11 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops-task-manager-backend:latest
+
+      - name: Update Kubernetes Deployment
+        run: |
+          kubectl set image deployment/flask-deployment flask=oviyaa2006/devops-task-manager-backend:latest
+
+      - name: Wait for Rollout
+        run: |
+          kubectl rollout status deployment/flask-deployment
