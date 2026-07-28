@@ -18,40 +18,40 @@ spec:
 
     spec:
       containers:
-      - name: flask
-        image: devops-task-manager-backend
-        imagePullPolicy: Never
+        - name: flask
+          image: oviyaa2006/devops-task-manager-backend:latest
+          imagePullPolicy: Always
 
-        ports:
-        - containerPort: 5000
+          ports:
+            - containerPort: 5000
 
-        env:
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: flask-config
-              key: DB_HOST
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-config
+                  key: DB_HOST
 
-        - name: DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: flask-config
-              key: DB_PORT
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-config
+                  key: DB_PORT
 
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: flask-config
-              key: DB_NAME
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-config
+                  key: DB_NAME
 
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_USER
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
 
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_PASSWORD
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
