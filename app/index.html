@@ -1,21 +1,1321 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>DevOps Task Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow — DevOps Task Manager</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>🚀 DevOps Task Manager</h1>
+<div class="app">
 
-<h2>Welcome Oviya!</h2>
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
-<p>This application is running inside a Docker container.</p>
+    <aside class="sidebar">
 
-<button onclick="hello()">Click Me</button>
+        <div class="logo">
+
+            <div class="logo-icon">
+                🚀
+            </div>
+
+            <div class="logo-text">
+                <h2>TaskFlow</h2>
+                <span>DevOps Manager</span>
+            </div>
+
+        </div>
+
+
+        <nav class="main-navigation">
+
+            <div class="nav-section-label">
+                WORKSPACE
+            </div>
+
+
+            <a
+                href="#dashboard"
+                class="nav-item active"
+                id="dashboardNav"
+                onclick="showDashboard(event)"
+            >
+                <span class="nav-icon">▦</span>
+
+                <span class="nav-text">
+                    Dashboard
+                </span>
+            </a>
+
+
+            <a
+                href="#my-tasks"
+                class="nav-item"
+                id="myTasksNav"
+                onclick="showMyTasks(event)"
+            >
+                <span class="nav-icon">✓</span>
+
+                <span class="nav-text">
+                    My Tasks
+                </span>
+            </a>
+
+
+            <a
+                href="#all-tasks"
+                class="nav-item"
+                id="allTasksNav"
+                onclick="showAllTasks(event)"
+            >
+                <span class="nav-icon">▤</span>
+
+                <span class="nav-text">
+                    All Tasks
+                </span>
+            </a>
+
+
+            <div class="nav-section-label team-label">
+                MANAGEMENT
+            </div>
+
+
+            <a
+                href="#team"
+                class="nav-item"
+                id="teamNav"
+                onclick="showTeam(event)"
+            >
+                <span class="nav-icon">👥</span>
+
+                <span class="nav-text">
+                    Team
+                </span>
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR STATUS -->
+
+        <div class="sidebar-bottom">
+
+            <div class="devops-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>System Online</strong>
+                    <small>Kubernetes cluster</small>
+                </div>
+
+            </div>
+
+            <div class="sidebar-version">
+                v1.0 • DevOps Workspace
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <!-- PAGE INFORMATION -->
+
+            <div class="topbar-heading">
+
+                <p
+                    class="breadcrumb"
+                    id="breadcrumb"
+                >
+                    Workspace / Dashboard
+                </p>
+
+                <h1 id="pageTitle">
+                    Good morning, Oviya 👋
+                </h1>
+
+                <p class="page-subtitle">
+                    Overview of your DevOps workspace
+                </p>
+
+            </div>
+
+
+            <!-- TOP ACTIONS -->
+
+            <div class="top-actions">
+
+
+                <!-- =========================================
+                     NOTIFICATIONS
+                ========================================== -->
+
+                <div class="notification-wrapper">
+
+                    <button
+                        class="icon-button"
+                        id="notificationButton"
+                        onclick="toggleNotifications()"
+                        title="Notifications"
+                        aria-label="Notifications"
+                    >
+
+                        <span class="notification-icon">
+                            🔔
+                        </span>
+
+                        <span
+                            id="notificationBadge"
+                            class="notification-badge"
+                           
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <!-- NOTIFICATION PANEL -->
+
+                    <div
+                        id="notificationPanel"
+                        class="notification-panel"
+                       
+                    >
+
+                        <div class="notification-header">
+
+                            <div>
+                                <strong>
+                                    Notifications
+                                </strong>
+
+                                <small>
+                                    Your latest updates
+                                </small>
+                            </div>
+
+                            <button
+                                type="button"
+                                onclick="markNotificationsRead()"
+                            >
+                                Mark read
+                            </button>
+
+                        </div>
+
+
+                        <div id="notificationList">
+
+                            <div class="notification-empty">
+
+                                <div class="notification-empty-icon">
+                                    🔔
+                                </div>
+
+                                <strong>
+                                    You're all caught up
+                                </strong>
+
+                                <span>
+                                    No new notifications
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     PROFILE
+                ========================================== -->
+
+                <div class="profile-wrapper">
+
+                    <button
+                        class="profile"
+                        id="profileButton"
+                        onclick="toggleProfileMenu()"
+                        type="button"
+                        aria-label="Open profile menu"
+                    >
+
+                        <div class="avatar">
+                            O
+                        </div>
+
+                        <div class="profile-info">
+
+                            <strong>
+                                Oviya
+                            </strong>
+
+                            <small>
+                                Developer
+                            </small>
+
+                        </div>
+
+                        <span class="profile-chevron">
+                            ▾
+                        </span>
+
+                    </button>
+
+
+                    <!-- PROFILE MENU -->
+
+                    <div
+                        id="profileMenu"
+                        class="profile-menu"
+                       
+                    >
+
+                        <div class="profile-menu-header">
+
+                            <div class="profile-menu-avatar">
+                                O
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Oviya
+                                </strong>
+
+                                <small>
+                                    Developer
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-menu-divider"></div>
+
+
+                        <button
+                            type="button"
+                            class="profile-menu-item"
+                            onclick="showProfileInfo()"
+                        >
+                            <span>👤</span>
+                            <span>My Profile</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="profile-menu-item"
+                            onclick="showWorkspaceInfo()"
+                        >
+                            <span>⚙️</span>
+                            <span>Workspace</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="profile-menu-item"
+                            onclick="showSystemInfo()"
+                        >
+                            <span>☁️</span>
+                            <span>System Status</span>
+                        </button>
+
+
+                        <div class="profile-menu-divider"></div>
+
+
+                        <button
+                            type="button"
+                            class="profile-menu-item danger"
+                            onclick="closeProfileMenu()"
+                        >
+                            <span>×</span>
+                            <span>Close Menu</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <section
+            id="dashboardSection"
+            class="dashboard-page"
+        >
+
+            <!-- DASHBOARD HERO -->
+
+            <div class="dashboard-hero">
+
+                <div class="dashboard-hero-content">
+
+                    <span class="dashboard-label">
+                        DEVOPS WORKSPACE
+                    </span>
+
+                    <h2>
+                        Project Command Center
+                    </h2>
+
+                    <p>
+                        Monitor your team's work, track delivery
+                        progress and keep every task moving.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <button
+                            class="hero-primary-btn"
+                            onclick="openTaskModal()"
+                        >
+                            + Create Task
+                        </button>
+
+                        <button
+                            class="hero-secondary-btn"
+                            onclick="showTeam()"
+                        >
+                            👥 View Team
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-hero-visual">
+
+                    <div class="hero-orbit orbit-one"></div>
+                    <div class="hero-orbit orbit-two"></div>
+
+                    <div class="hero-center">
+                        🚀
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DASHBOARD STATISTICS -->
+
+            <section class="stats dashboard-stat-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📋
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Total Tasks
+                        </span>
+
+                        <strong id="totalTasks">
+                            0
+                        </strong>
+
+                        <small>
+                            Across workspace
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon yellow">
+                        ⏳
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            To Do
+                        </span>
+
+                        <strong id="todoTasks">
+                            0
+                        </strong>
+
+                        <small>
+                            Waiting to start
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        ⚙️
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            In Progress
+                        </span>
+
+                        <strong id="inProgressTasks">
+                            0
+                        </strong>
+
+                        <small>
+                            Currently active
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <strong id="completedTasks">
+                            0
+                        </strong>
+
+                        <small>
+                            Successfully delivered
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- DASHBOARD QUICK AREA -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- RECENT TASKS -->
+
+                <section class="dashboard-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+
+                            <span class="panel-eyebrow">
+                                ACTIVITY
+                            </span>
+
+                            <h3>
+                                Recent Tasks
+                            </h3>
+
+                            <p>
+                                Latest activity in your workspace
+                            </p>
+
+                        </div>
+
+                        <button
+                            class="panel-button"
+                            onclick="showAllTasks()"
+                        >
+                            View all →
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="dashboardRecentTasks"
+                        class="recent-task-list"
+                    >
+
+                        <div class="empty-state">
+                            Loading tasks...
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- PROGRESS -->
+
+                <section class="dashboard-panel progress-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+
+                            <span class="panel-eyebrow">
+                                DELIVERY
+                            </span>
+
+                            <h3>
+                                Project Progress
+                            </h3>
+
+                            <p>
+                                Overall completion rate
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-circle">
+
+                        <div class="progress-circle-inner">
+
+                            <strong id="dashboardCompletion">
+                                0%
+                            </strong>
+
+                            <span>
+                                completed
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-summary">
+
+                        <span>
+                            Completed
+                            <strong id="dashboardCompletedCount">
+                                0
+                            </strong>
+                        </span>
+
+                        <span>
+                            Remaining
+                            <strong id="dashboardRemainingCount">
+                                0
+                            </strong>
+                        </span>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+
+            <!-- UPCOMING DEADLINES -->
+
+            <section class="dashboard-panel upcoming-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            SCHEDULE
+                        </span>
+
+                        <h3>
+                            Upcoming Deadlines
+                        </h3>
+
+                        <p>
+                            Keep important delivery dates visible
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="panel-button"
+                        onclick="showAllTasks()"
+                    >
+                        Manage →
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="dashboardUpcomingTasks"
+                    class="upcoming-list"
+                >
+
+                    <div class="empty-state">
+                        Loading deadlines...
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LEGACY TASK CONTAINER
+        ================================================== -->
+
+        <section
+            class="tasks-container"
+           
+        >
+
+            <div class="tasks-header">
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        WORKSPACE
+                    </span>
+
+                    <h2>
+                        Tasks
+                    </h2>
+
+                    <p>
+                        Manage and track your team's work
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="new-task-btn"
+                    onclick="openTaskModal()"
+                >
+                    + New Task
+                </button>
+
+            </div>
+
+
+            <div class="toolbar">
+
+                <div class="search-box">
+
+                    <span>🔍</span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search tasks..."
+                        oninput="filterTasks()"
+                    >
+
+                </div>
+
+
+                <select
+                    id="statusFilter"
+                    onchange="filterTasks()"
+                >
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="To Do">
+                        To Do
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                </select>
+
+
+                <select
+                    id="priorityFilter"
+                    onchange="filterTasks()"
+                >
+                    <option value="all">
+                        All Priority
+                    </option>
+
+                    <option value="High">
+                        High
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="Low">
+                        Low
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                id="loading"
+                class="loading"
+            >
+                Loading tasks...
+            </div>
+
+
+            <div
+                id="error"
+                class="error"
+            ></div>
+
+
+            <div
+                id="taskList"
+                class="task-list"
+            ></div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MY TASKS
+        ================================================== -->
+
+        <section
+            id="myTasksSection"
+            class="my-tasks-page"
+           
+        >
+        </section>
+
+
+
+        <!-- =================================================
+             ALL TASKS
+        ================================================== -->
+
+        <section
+            id="allTasksSection"
+            class="all-tasks-page"
+           
+        >
+        </section>
+
+
+
+        <!-- =================================================
+             TEAM
+        ================================================== -->
+
+        <section
+            id="teamSection"
+            class="team-page"
+           
+        >
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     TASK MODAL
+========================================================= -->
+
+<div
+    id="taskModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-eyebrow">
+                    TASK MANAGEMENT
+                </span>
+
+                <h2>
+                    Create New Task
+                </h2>
+
+                <p>
+                    Add a task to your DevOps workspace
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-btn"
+                onclick="closeTaskModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            id="taskForm"
+            onsubmit="saveTask(event)"
+        >
+
+            <div class="form-group">
+
+                <label>
+                    Task Title
+                </label>
+
+                <input
+                    type="text"
+                    id="taskTitle"
+                    placeholder="e.g. Deploy Flask backend"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    id="taskDescription"
+                    placeholder="Describe what needs to be done..."
+                    rows="4"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        Assign To
+                    </label>
+
+                    <select id="taskAssignee">
+
+                        <option value="Oviya">
+                            Oviya
+                        </option>
+
+                        <option value="Hareni">
+                            Hareni
+                        </option>
+
+                        <option value="Nivetha">
+                            Nivetha
+                        </option>
+
+                        <option value="Harini">
+                            Harini
+                        </option>
+
+                        <option value="Pavithra">
+                            Pavithra
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Priority
+                    </label>
+
+                    <select id="taskPriority">
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                        <option
+                            value="Medium"
+                            selected
+                        >
+                            Medium
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        Due Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="taskDueDate"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select id="taskStatus">
+
+                        <option value="To Do">
+                            To Do
+                        </option>
+
+                        <option value="In Progress">
+                            In Progress
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeTaskModal()"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="create-btn"
+                >
+                    Create Task
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     TEAM MEMBER MODAL
+========================================================= -->
+
+<div
+    id="memberModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-eyebrow">
+                    TEAM MANAGEMENT
+                </span>
+
+                <h2 id="memberModalTitle">
+                    Add Team Member
+                </h2>
+
+                <p>
+                    Add or update a member of your team
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-btn"
+                onclick="closeMemberModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            id="memberForm"
+            onsubmit="saveTeamMember(event)"
+        >
+
+            <input
+                type="hidden"
+                id="memberId"
+            >
+
+
+            <div class="form-group">
+
+                <label>
+                    Member Name
+                </label>
+
+                <input
+                    type="text"
+                    id="memberName"
+                    placeholder="Enter member name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Role
+                </label>
+
+                <input
+                    type="text"
+                    id="memberRole"
+                    placeholder="e.g. Developer"
+                    value="Developer"
+                    required
+                >
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeMemberModal()"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="create-btn"
+                >
+                    Save Member
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     PROFILE INFO MODAL
+========================================================= -->
+
+<div
+    id="profileInfoModal"
+    class="modal"
+>
+
+    <div class="modal-content profile-modal">
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-eyebrow">
+                    USER PROFILE
+                </span>
+
+                <h2>
+                    My Profile
+                </h2>
+
+                <p>
+                    Your TaskFlow workspace identity
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-btn"
+                onclick="closeProfileInfo()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="profile-card-large">
+
+            <div class="profile-large-avatar">
+                O
+            </div>
+
+            <div>
+
+                <h3>
+                    Oviya
+                </h3>
+
+                <p>
+                    Developer
+                </p>
+
+                <span class="online-label">
+                    <span class="status-dot"></span>
+                    Active
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-details">
+
+            <div>
+                <span>Role</span>
+                <strong>Developer</strong>
+            </div>
+
+            <div>
+                <span>Workspace</span>
+                <strong>TaskFlow</strong>
+            </div>
+
+            <div>
+                <span>Platform</span>
+                <strong>Kubernetes</strong>
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="create-btn"
+                onclick="closeProfileInfo()"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
