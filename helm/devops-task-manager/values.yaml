@@ -39,7 +39,7 @@ podSecurityContext: {}
 # =========================================================
 
 frontend:
-  image: devops-task-manager-frontend:v9
+  image: devops-task-manager-frontend:v13
   replicaCount: 1
   servicePort: 80
 

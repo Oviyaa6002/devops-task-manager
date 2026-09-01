@@ -1895,7 +1895,7 @@ function openTeamModal(member = null) {
                         <input
                             id="teamMemberName"
                             type="text"
-                            placeholder="e.g. Hareni"
+                            placeholder="e.g. Oviya"
                             required
                         >
 
